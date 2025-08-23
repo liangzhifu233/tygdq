@@ -39,6 +39,7 @@ namespace WindowsFormsApplication2
         public void SetCiKu(string[] astr )
         {
             _dict.Clear();
+            return;
            
             foreach (string s in astr)
             {
@@ -88,6 +89,7 @@ namespace WindowsFormsApplication2
         public void SetCiKu()
         {
             _dict.Clear();
+            return;
 
             var lists = Glob.BmAlls.Where(j => j.查询的字.Length > 1).ToList();
             var alls = lists.Select(o => o.查询的字).ToArray();

@@ -6,6 +6,8 @@ using System.Text;
 using System.Windows.Forms;
 using System.Drawing;
 using System.Runtime.InteropServices;
+using System.IO;
+using System.Text.RegularExpressions;
 
 namespace WindowsFormsApplication2
 {
@@ -108,7 +110,7 @@ namespace WindowsFormsApplication2
             _lineInfos.Clear();
             foreach (WordInfo info in _wordInfos)
             {
-                AddLine_OneWord(_lineInfos, info.start, info.end, info.color,info.len);
+                AddLine_OneWord(_lineInfos, info.start, info.end, info.color, info.len);
             }
 
             ShowLines(_lineInfos);
@@ -210,12 +212,12 @@ namespace WindowsFormsApplication2
                 //绘制每个字符
                 foreach (LineInfo li in lineInfos)
                 {
-                    using (var pen = new Pen(li.color,2))
+                    using (var pen = new Pen(li.color, 2))
                     {
                         if (li.len != 4 && li.len != 0) //非全码用虚线显示
                         {
                             pen.DashStyle = DashStyle.Dash;
-                            pen.DashPattern = new float[] {2, 2};
+                            pen.DashPattern = new float[] { 2, 2 };
                         }
                         //if (li.len > 0)
                         //{
@@ -230,7 +232,7 @@ namespace WindowsFormsApplication2
                         //}
                         //else
                         //{
-                            e.Graphics.DrawLine(pen, li.left - 4, 0, li.left + li.width, 0); //注：因为纵向的坐标，floatControl已经做了偏离了，所以绘制线的时候top=0
+                        e.Graphics.DrawLine(pen, li.left - 4, 0, li.left + li.width, 0); //注：因为纵向的坐标，floatControl已经做了偏离了，所以绘制线的时候top=0
                         //}
                     }
                 }
@@ -250,7 +252,7 @@ namespace WindowsFormsApplication2
             if (ctlLine < curLine)
             {
                 //整行都已经打过，背景色直接设置为已打过
-                using (Pen pen = new Pen(_bkRightColor,1))
+                using (Pen pen = new Pen(_bkRightColor, 1))
                 {
                     e.Graphics.DrawLine(pen, 1, 0, ctl.Width, 0); //注：因为纵向的坐标，floatControl已经做了偏离了，所以绘制线的时候top=0
                 }
@@ -258,7 +260,7 @@ namespace WindowsFormsApplication2
             else if (ctlLine > curLine)
             {
                 //整行都已经未打，背景色直接设置为未打过的
-                using (Pen pen = new Pen(_rich.BackColor,1))
+                using (Pen pen = new Pen(_rich.BackColor, 1))
                 {
                     e.Graphics.DrawLine(pen, 1, 0, ctl.Width, 0); //注：因为纵向的坐标，floatControl已经做了偏离了，所以绘制线的时候top=0
                 }
@@ -269,12 +271,12 @@ namespace WindowsFormsApplication2
                 Point pt = _rich.GetPositionFromCharIndex(_currIndex);
                 //pt.X += (int)(_charSize.Width);
 
-                using (Pen pen = new Pen(_bkRightColor,2))
+                using (Pen pen = new Pen(_bkRightColor, 2))
                 {
                     e.Graphics.DrawLine(pen, 1, 0, pt.X, 0); //注：因为纵向的坐标，floatControl已经做了偏离了，所以绘制线的时候top=0
                 }
 
-                using (Pen pen = new Pen(_rich.BackColor,2))
+                using (Pen pen = new Pen(_rich.BackColor, 2))
                 {
                     e.Graphics.DrawLine(pen, pt.X, 0, ctl.Width, 0); //注：因为纵向的坐标，floatControl已经做了偏离了，所以绘制线的时候top=0
                 }
@@ -286,21 +288,21 @@ namespace WindowsFormsApplication2
         /// </summary>
         /// <param name="indexStart"></param>
         /// <param name="indexEnd"></param>
-        private void AddLine_OneWord(List<LineInfo> lineInfos, int indexStart, int indexEnd, Color color,int len)
+        private void AddLine_OneWord(List<LineInfo> lineInfos, int indexStart, int indexEnd, Color color, int len)
         {
             if (indexEnd - indexStart == 0)
             {
-                AddLine_OneChar(lineInfos, indexStart, LineMode.Single, color,len);
+                AddLine_OneChar(lineInfos, indexStart, LineMode.Single, color, len);
             }
 
 
-            AddLine_OneChar(lineInfos, indexStart, LineMode.Start, color,len);
+            AddLine_OneChar(lineInfos, indexStart, LineMode.Start, color, len);
             for (int i = indexStart + 1; i < indexEnd; i++)
             {
 
-                AddLine_OneChar(lineInfos, i, LineMode.Middle, color,len);
+                AddLine_OneChar(lineInfos, i, LineMode.Middle, color, len);
             }
-            AddLine_OneChar(lineInfos, indexEnd, LineMode.End, color,len);
+            AddLine_OneChar(lineInfos, indexEnd, LineMode.End, color, len);
 
         }
 
@@ -309,7 +311,7 @@ namespace WindowsFormsApplication2
         /// </summary>
         /// <param name="index"></param>
         /// <param name="mode"></param>
-        private void AddLine_OneChar(List<LineInfo> lineInfos, int index, LineMode mode, Color color,int len)
+        private void AddLine_OneChar(List<LineInfo> lineInfos, int index, LineMode mode, Color color, int len)
         {
             try
             {
@@ -379,6 +381,420 @@ namespace WindowsFormsApplication2
                 }
             }
         }
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.SuspendLayout();
+            this.ResumeLayout(false);
+        }
+    }
+    public class Citi
+    {
+        private Dictionary<string, string> codeDict = new Dictionary<string, string>();
+        private Dictionary<string, int> lengthDict = new Dictionary<string, int>();
+        private Dictionary<string, bool> isEndWithSpace = new Dictionary<string, bool>();
+        private Dictionary<string, bool> isPunctuation = new Dictionary<string, bool>();
+
+        private int getLetterCount(string s)
+        {
+            HashSet<string> letters = new HashSet<string> { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" };
+            int res = 0;
+            for (int i = 0; i < s.Length; i++)
+                if (letters.Contains((s.Substring(i, 1))))
+                    res++;
+            return res;
+        }
+
+        public Citi()
+        {
+            // 标点
+            {
+                codeDict.Add("\n", "↵");
+                codeDict.Add(" ", "_");
+                codeDict.Add("~", "↑~");
+                codeDict.Add("！", "↑！");
+                codeDict.Add("@", "↑@");
+                codeDict.Add("#", "↑#");
+                codeDict.Add("$", "↑$");
+                codeDict.Add("……", "↑^");
+                codeDict.Add("&", "↑&");
+                codeDict.Add("*", "↑*");
+                codeDict.Add("（", "↑(");
+                codeDict.Add("）", "↑)");
+                codeDict.Add("-", "-");
+                codeDict.Add("=", "=");
+                codeDict.Add("：", "↑:");
+                codeDict.Add("；", ";");
+                codeDict.Add("‘", "'");
+                codeDict.Add("’", "'");
+                codeDict.Add("“", "↑\"");
+                codeDict.Add("”", "↑\"");
+                codeDict.Add("《", "↑<");
+                codeDict.Add("》", "↑>");
+                codeDict.Add("？", "↑?");
+                codeDict.Add("，", ",");
+                codeDict.Add(",", ",");
+                codeDict.Add("。", ".");
+                codeDict.Add("、", "/");
+                codeDict.Add("!", "↑!");
+                codeDict.Add("%", "↑%");
+                codeDict.Add("^", "↑^");
+                codeDict.Add("(", "↑(");
+                codeDict.Add(")", "↑)");
+                codeDict.Add("_", "↑-");
+                codeDict.Add("+", "↑+");
+                codeDict.Add("[", "[");
+                codeDict.Add("]", "]");
+                codeDict.Add("{", "↑{");
+                codeDict.Add("}", "↑}");
+                codeDict.Add("\\", "\\");
+                codeDict.Add("|", "↑|");
+                codeDict.Add(";", ";");
+                codeDict.Add(":", "↑:");
+                codeDict.Add("'", "'");
+                codeDict.Add("\"", "↑\"");
+                codeDict.Add(");", ");");
+                codeDict.Add(".", ".");
+                codeDict.Add("/", "↑/");
+                codeDict.Add("<", "↑<");
+                codeDict.Add(">", "↑>");
+                codeDict.Add("?", "↑?");
+                codeDict.Add("1", "1");
+                codeDict.Add("2", "2");
+                codeDict.Add("3", "3");
+                codeDict.Add("4", "4");
+                codeDict.Add("5", "5");
+                codeDict.Add("6", "6");
+                codeDict.Add("7", "7");
+                codeDict.Add("8", "8");
+                codeDict.Add("9", "9");
+                codeDict.Add("0", "0");
+                codeDict.Add("q", "q");
+                codeDict.Add("w", "w");
+                codeDict.Add("e", "e");
+                codeDict.Add("r", "r");
+                codeDict.Add("t", "t");
+                codeDict.Add("y", "y");
+                codeDict.Add("u", "u");
+                codeDict.Add("i", "i");
+                codeDict.Add("o", "o");
+                codeDict.Add("p", "p");
+                codeDict.Add("a", "a");
+                codeDict.Add("s", "s");
+                codeDict.Add("d", "d");
+                codeDict.Add("f", "f");
+                codeDict.Add("g", "g");
+                codeDict.Add("h", "h");
+                codeDict.Add("j", "j");
+                codeDict.Add("k", "k");
+                codeDict.Add("l", "l");
+                codeDict.Add("z", "z");
+                codeDict.Add("x", "x");
+                codeDict.Add("c", "c");
+                codeDict.Add("v", "v");
+                codeDict.Add("b", "b");
+                codeDict.Add("n", "n");
+                codeDict.Add("m", "m");
+                codeDict.Add("Q", "Q");
+                codeDict.Add("W", "W");
+                codeDict.Add("E", "E");
+                codeDict.Add("R", "R");
+                codeDict.Add("T", "T");
+                codeDict.Add("Y", "Y");
+                codeDict.Add("U", "U");
+                codeDict.Add("I", "I");
+                codeDict.Add("O", "O");
+                codeDict.Add("P", "P");
+                codeDict.Add("A", "A");
+                codeDict.Add("S", "S");
+                codeDict.Add("D", "D");
+                codeDict.Add("F", "F");
+                codeDict.Add("G", "G");
+                codeDict.Add("H", "H");
+                codeDict.Add("J", "J");
+                codeDict.Add("K", "K");
+                codeDict.Add("L", "L");
+                codeDict.Add("Z", "Z");
+                codeDict.Add("X", "X");
+                codeDict.Add("C", "C");
+                codeDict.Add("V", "V");
+                codeDict.Add("B", "B");
+                codeDict.Add("N", "N");
+                codeDict.Add("M", "M");
+            }
+            foreach (string ci in codeDict.Keys)
+            {
+                string ma = codeDict[ci];
+                isEndWithSpace.Add(ci, false);
+                lengthDict.Add(ci, ma.Length);
+            }
+            // 是否标点
+            {
+                isPunctuation.Add(" ", false);
+                isPunctuation.Add("~", true);
+                isPunctuation.Add("！", true);
+                isPunctuation.Add("@", true);
+                isPunctuation.Add("#", true);
+                isPunctuation.Add("$", true);
+                isPunctuation.Add("……", true);
+                isPunctuation.Add("&", true);
+                isPunctuation.Add("*", true);
+                isPunctuation.Add("（", true);
+                isPunctuation.Add("）", true);
+                isPunctuation.Add("-", false);
+                isPunctuation.Add("=", false);
+                isPunctuation.Add("：", true);
+                isPunctuation.Add("；", false);
+                isPunctuation.Add("‘", false);
+                isPunctuation.Add("’", false);
+                isPunctuation.Add("'", false);
+                isPunctuation.Add("“", true);
+                isPunctuation.Add("”", true);
+                isPunctuation.Add("《", true);
+                isPunctuation.Add("》", true);
+                isPunctuation.Add("？", true);
+                isPunctuation.Add("，", true);
+                isPunctuation.Add("。", true);
+                isPunctuation.Add("、", true);
+                isPunctuation.Add("!", false);
+                isPunctuation.Add("%", true);
+                isPunctuation.Add("^", false);
+                isPunctuation.Add("(", false);
+                isPunctuation.Add(")", false);
+                isPunctuation.Add("_", false);
+                isPunctuation.Add("+", false);
+                isPunctuation.Add("[", false);
+                isPunctuation.Add("]", false);
+                isPunctuation.Add("{", false);
+                isPunctuation.Add("}", false);
+                isPunctuation.Add("\\", false);
+                isPunctuation.Add("|", false);
+                isPunctuation.Add(";", false);
+                isPunctuation.Add(",", false);
+                isPunctuation.Add("\"", false);
+                isPunctuation.Add(");", false);
+                isPunctuation.Add(".", false);
+                isPunctuation.Add("/", false);
+                isPunctuation.Add("<", false);
+                isPunctuation.Add(">", false);
+                isPunctuation.Add("?", false);
+                isPunctuation.Add("1", false);
+                isPunctuation.Add("2", false);
+                isPunctuation.Add("3", false);
+                isPunctuation.Add("4", false);
+                isPunctuation.Add("5", false);
+                isPunctuation.Add("6", false);
+                isPunctuation.Add("7", false);
+                isPunctuation.Add("8", false);
+                isPunctuation.Add("9", false);
+                isPunctuation.Add("0", false);
+                isPunctuation.Add("q", false);
+                isPunctuation.Add("w", false);
+                isPunctuation.Add("e", false);
+                isPunctuation.Add("r", false);
+                isPunctuation.Add("t", false);
+                isPunctuation.Add("y", false);
+                isPunctuation.Add("u", false);
+                isPunctuation.Add("i", false);
+                isPunctuation.Add("o", false);
+                isPunctuation.Add("p", false);
+                isPunctuation.Add("a", false);
+                isPunctuation.Add("s", false);
+                isPunctuation.Add("d", false);
+                isPunctuation.Add("f", false);
+                isPunctuation.Add("g", false);
+                isPunctuation.Add("h", false);
+                isPunctuation.Add("j", false);
+                isPunctuation.Add("k", false);
+                isPunctuation.Add("l", false);
+                isPunctuation.Add("z", false);
+                isPunctuation.Add("x", false);
+                isPunctuation.Add("c", false);
+                isPunctuation.Add("v", false);
+                isPunctuation.Add("b", false);
+                isPunctuation.Add("n", false);
+                isPunctuation.Add("m", false);
+                isPunctuation.Add("Q", false);
+                isPunctuation.Add("W", false);
+                isPunctuation.Add("E", false);
+                isPunctuation.Add("R", false);
+                isPunctuation.Add("T", false);
+                isPunctuation.Add("Y", false);
+                isPunctuation.Add("U", false);
+                isPunctuation.Add("I", false);
+                isPunctuation.Add("O", false);
+                isPunctuation.Add("P", false);
+                isPunctuation.Add("A", false);
+                isPunctuation.Add("S", false);
+                isPunctuation.Add("D", false);
+                isPunctuation.Add("F", false);
+                isPunctuation.Add("G", false);
+                isPunctuation.Add("H", false);
+                isPunctuation.Add("J", false);
+                isPunctuation.Add("K", false);
+                isPunctuation.Add("L", false);
+                isPunctuation.Add("Z", false);
+                isPunctuation.Add("X", false);
+                isPunctuation.Add("C", false);
+                isPunctuation.Add("V", false);
+                isPunctuation.Add("B", false);
+                isPunctuation.Add("N", false);
+                isPunctuation.Add("M", false);
+            }
+
+            HashSet<string> maYuan = new HashSet<string> { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" };
+            try
+            {
+                using (StreamReader sr = new StreamReader("citi.txt"))
+                {
+                    string line;
+                    while ((line = sr.ReadLine()) != null)
+                    {
+                        string[] strArray = Regex.Split(line, "\t", RegexOptions.IgnoreCase);
+                        string ci = strArray[0].ToString();
+                        string ma = strArray[1].ToString();
+                        if (!codeDict.ContainsKey(ci))
+                        {
+                            codeDict.Add(ci, ma);
+                            lengthDict.Add(ci, ma.Length);
+                            isEndWithSpace.Add(ci, ma.Substring(ma.Length - 1, 1) == "_");
+                            isPunctuation.Add(ci, !maYuan.Contains(ma.Substring(0, 1)));
+                        }
+                        if (ma.Length < codeDict[ci].Length || getLetterCount(ma) < getLetterCount(codeDict[ci]))
+                        {
+                            codeDict[ci] = ma;
+                            lengthDict[ci] = ma.Length;
+                            isEndWithSpace[ci] = ma.Substring(ma.Length - 1, 1) == "_";
+                            isPunctuation[ci] = !maYuan.Contains(ma.Substring(0, 1));
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e.ToString());
+            }
+        }
+
+        public string[][] getPrompt(string s)
+        {
+            // 词语前缀
+            HashSet<string> prefixSet = new HashSet<string>();
+            foreach (string ci in codeDict.Keys)
+            {
+                for (int i = 1; i < ci.Length; i++)
+                {
+                    string prefix = ci.Substring(0, i);
+                    if (!prefixSet.Contains(prefix))
+                    {
+                        prefixSet.Add(prefix);
+                    }
+                }
+            }
+
+            int[][] dp = new int[s.Length + 1][];
+            for (int i = 0; i < dp.Length; i++)
+                dp[i] = new int[] { -1, -1, -1 };
+
+            for (int pos = 0; pos < s.Length; pos++)
+            {
+                int curLen = 1;
+                while (pos + curLen <= s.Length)
+                {
+                    string subStr = s.Substring(pos, curLen);
+                    if (curLen == 1 || codeDict.ContainsKey(subStr))
+                    {
+                        if (!codeDict.ContainsKey(subStr))
+                        {
+                            // 已有key add 会报错
+                            // codeDict.Add(subStr, "?");
+                            // isPunctuation.Add(subStr, false);
+                            // isEndWithSpace.Add(subStr, false);
+                            // lengthDict.Add(subStr, 1);
+
+                            codeDict[subStr] = "?";
+                            isPunctuation[subStr] = false;
+                            isEndWithSpace[subStr] = false;
+                            lengthDict[subStr] = 1;
+                        }
+                        else
+                        {
+                            if (!isPunctuation.ContainsKey(subStr))
+                                isPunctuation[subStr] = false;
+                            string code = codeDict[subStr];
+                            isEndWithSpace[subStr] = code.Substring(code.Length - 1, 1) == "_";
+                            lengthDict[subStr] = code.Length;
+                        }
+
+                        int curWordLength = lengthDict[subStr];
+                        int newPos = pos + curLen;
+                        if (newPos > s.Length)
+                            break;
+                        int[] newDp = dp[newPos];
+                        int newCodeLen = dp[pos][0] + curWordLength;
+                        if (dp[pos][1] == 1 && isPunctuation[subStr])
+                            newCodeLen -= 1;
+                        bool newEndWithSpace = isEndWithSpace[subStr];
+                        if (newDp[0] == -1 || newDp[0] > newCodeLen || (newDp[0] == newCodeLen && newEndWithSpace))
+                        {
+                            dp[newPos][0] = newCodeLen;
+                            if (newEndWithSpace)
+                                dp[newPos][1] = 1;
+                            dp[newPos][2] = pos;
+                        }
+                    }
+                    if (prefixSet.Contains(s.Substring(pos, curLen)))
+                    {
+                        curLen += 1;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+            }
+
+            int curPos = s.Length;
+            LinkedList<string[]> prompt = new LinkedList<string[]>();
+            while (curPos != 0)
+            {
+                int prePos = dp[curPos][2];
+                string subStr = s.Substring(prePos, curPos - prePos);
+                prompt.AddLast(new string[2] { subStr, codeDict[subStr] });
+                curPos = prePos;
+            }
+            // prompt.Reverse();
+            string[][] res = new string[prompt.Count()][];
+            for (int i = 0; i < res.Length; i++)
+                res[i] = new string[] { "", "", "" };
+            for (int i = 0; i < prompt.Count(); i++)
+            {
+                string[] ele = prompt.ElementAt(i);
+                res[prompt.Count() - 1 - i][0] = ele[0];
+                res[prompt.Count() - 1 - i][1] = ele[1];
+            }
+            for (int i = 0; i < res.Length - 1; i++)
+                if (isEndWithSpace[res[i][0]] && isPunctuation[res[i][0]])
+                    res[i][1] = res[i][1].Replace("_", "");
+            return res;
+        }
+
+        public string getCode(string word)
+        {
+            string res = "";
+            try
+            {
+                res = codeDict[word];
+            }
+            catch
+            {
+                res = "?";
+            }
+            return res;
+        }
     }
 }
-

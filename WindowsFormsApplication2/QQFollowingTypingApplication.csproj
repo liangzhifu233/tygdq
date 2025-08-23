@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -75,12 +75,50 @@
     </StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="HttpSender, Version=0.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\HttpSender.0.5.0\lib\net45\HttpSender.dll</HintPath>
+    </Reference>
+    <Reference Include="JiebaNet.Analyser, Version=0.42.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\jieba.NET.0.42.2\lib\net45\JiebaNet.Analyser.dll</HintPath>
+    </Reference>
+    <Reference Include="JiebaNet.Segmenter, Version=0.42.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\jieba.NET.0.42.2\lib\net45\JiebaNet.Segmenter.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.8.0.0-preview.6.23329.7\lib\netstandard2.0\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="mscorlib" />
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
     <Reference Include="System.Core" />
+    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
     <Reference Include="System.Messaging" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Encodings.Web, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encodings.Web.8.0.0-preview.6.23329.7\lib\netstandard2.0\System.Text.Encodings.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Json.8.0.0-preview.6.23329.7\lib\netstandard2.0\System.Text.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />
@@ -100,6 +138,12 @@
     <Compile Include="AboutBox.Designer.cs">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="city\City.cs" />
+    <Compile Include="city\CityInfo.cs" />
+    <Compile Include="city\CodeInfo.cs" />
+    <Compile Include="city\Edge.cs" />
+    <Compile Include="city\UnicodeUtil.cs" />
+    <Compile Include="ConfManager.cs" />
     <Compile Include="ControlExtensions.cs" />
     <Compile Include="FormTheme.cs">
       <SubType>Form</SubType>
@@ -107,7 +151,16 @@
     <Compile Include="FormTheme.Designer.cs">
       <DependentUpon>FormTheme.cs</DependentUpon>
     </Compile>
-    <Compile Include="Glob.cs" />
+    <Compile Include="Glob.cs">
+      <DependentUpon>keyboard.ico</DependentUpon>
+    </Compile>
+    <Compile Include="net\ChangSheng.cs" />
+    <Compile Include="net\JS.cs">
+      <DependentUpon>ChangSheng.cs</DependentUpon>
+    </Compile>
+    <Compile Include="net\Sender.cs" />
+    <Compile Include="net\TigerCup.cs" />
+    <Compile Include="net\Util.cs" />
     <Compile Include="NewButton.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -279,6 +332,9 @@
     <EmbeddedResource Include="跟打部分\JjCheck.resx">
       <DependentUpon>JjCheck.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="跟打部分\RichEditBoxLineRender.resx">
+      <DependentUpon>RichEditBoxLineRender.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="跟打部分\SpeedAn.resx">
       <DependentUpon>SpeedAn.cs</DependentUpon>
     </EmbeddedResource>
@@ -288,6 +344,7 @@
     <EmbeddedResource Include="精五成绩生成.resx">
       <DependentUpon>精五成绩生成.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -343,12 +400,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="2013.ico" />
+    <Content Include="keyboard.ico" />
     <Content Include="rain_48x48.ico" />
     <None Include="Resources\doing.gif" />
     <None Include="Resources\pay2.png" />
     <EmbeddedResource Include="Resources\3.jpg" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

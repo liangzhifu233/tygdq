@@ -114,9 +114,9 @@ namespace WindowsFormsApplication2
                 {
                     rtbShowText.Text = GetText + "[已完]";
                 }
-                if (Text.Length > 25)
+                if (Text.Length > 10)
                 {
-                    this.tbxSendCount.Text = "25";
+                    this.tbxSendCount.Text = "10";
                 }
                 else
                 {

@@ -1,4 +1,7 @@
-﻿namespace WindowsFormsApplication2
+﻿using System.Drawing.Printing;
+using System.Windows.Forms;
+
+namespace WindowsFormsApplication2
 {
     partial class Form1
     {
@@ -166,11 +169,22 @@
             this.设置ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.新发文ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.外观ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.暂停ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.重置词提ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.重置记分ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.发送记分ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.清空编码键ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.标顶ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.长生ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.极速锦标赛ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.极速日赛ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.乱序ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.乱序ToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            // this.暂停ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.载文途径ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.从剪切板ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.从QQ窗口手动ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.从QQ窗口手动ToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.其它功能ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.查询当前编码ToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.老板键ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -851,7 +865,7 @@
             // 
             // richTextBox1
             // 
-            this.richTextBox1.BackColor = System.Drawing.Color.White;
+            this.richTextBox1.BackColor = System.Drawing.Color.Pink;
             this.richTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.richTextBox1.ContextMenuStrip = this.contextMenuStripMain;
             this.richTextBox1.Cursor = System.Windows.Forms.Cursors.Default;
@@ -915,7 +929,7 @@
             // 将目前文章乱序ToolStripMenuItem
             // 
             this.将目前文章乱序ToolStripMenuItem.Name = "将目前文章乱序ToolStripMenuItem";
-            this.将目前文章乱序ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Q)));
+            this.将目前文章乱序ToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F12;
             this.将目前文章乱序ToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
             this.将目前文章乱序ToolStripMenuItem.Text = "将目前文章乱序";
             this.将目前文章乱序ToolStripMenuItem.Click += new System.EventHandler(this.将目前文章乱序ToolStripMenuItem_Click);
@@ -1037,6 +1051,9 @@
             this.textBoxEx1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxEx1.WordWrap = true;
+            this.textBoxEx1.AutoSize = true;
+            this.textBoxEx1.Dock = DockStyle.Fill;
             this.textBoxEx1.BackColor = System.Drawing.Color.White;
             this.textBoxEx1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textBoxEx1.Font = new System.Drawing.Font("宋体", 14F);
@@ -1049,7 +1066,7 @@
             this.textBoxEx1.Name = "textBoxEx1";
             this.textBoxEx1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textBoxEx1.ShortcutsEnabled = false;
-            this.textBoxEx1.Size = new System.Drawing.Size(395, 20);
+            // this.textBoxEx1.Size = new System.Drawing.Size(395, 20);
             this.textBoxEx1.TabIndex = 2;
             this.toolTip1.SetToolTip(this.textBoxEx1, "跟打区");
             this.textBoxEx1.TextChanged += new System.EventHandler(this.textBoxEx1_TextChanged);
@@ -1120,11 +1137,12 @@
             this.labelhgstatus.Name = "labelhgstatus";
             this.labelhgstatus.Size = new System.Drawing.Size(31, 14);
             this.labelhgstatus.TabIndex = 9;
-            this.labelhgstatus.Text = "0";
+            this.labelhgstatus.Text = "";
             this.labelhgstatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.toolTip1.SetToolTip(this.labelhgstatus, "回改显示(绿字加下划线)\r\n左键点击：向下寻找回改字位置\r\n右键点击：向上寻找回改字位置");
-            this.labelhgstatus.TextChanged += new System.EventHandler(this.labelhgstatus_TextChanged);
-            this.labelhgstatus.MouseClick += new System.Windows.Forms.MouseEventHandler(this.labelhgstatus_MouseClick);
+            // this.toolTip1.SetToolTip(this.labelhgstatus, "回改显示(绿字加下划线)\r\n左键点击：向下寻找回改字位置\r\n右键点击：向上寻找回改字位置");
+            // this.labelhgstatus.TextChanged += new System.EventHandler(this.labelhgstatus_TextChanged);
+            // this.labelhgstatus.MouseClick += new System.Windows.Forms.MouseEventHandler(this.labelhgstatus_MouseClick);
+            
             // 
             // labelTimeFlys
             // 
@@ -1508,8 +1526,8 @@
             // 
             // splitContainer3.Panel1
             // 
-            this.splitContainer3.Panel1.Controls.Add(this.tableLayoutPanel2);
             this.splitContainer3.Panel1.Controls.Add(this.textBoxEx1);
+            this.splitContainer3.Panel1.Controls.Add(this.tableLayoutPanel2);
             // 
             // splitContainer3.Panel2
             // 
@@ -1594,7 +1612,7 @@
             this.lbl错字显示.Name = "lbl错字显示";
             this.lbl错字显示.Size = new System.Drawing.Size(31, 14);
             this.lbl错字显示.TabIndex = 17;
-            this.lbl错字显示.Text = "错字";
+            this.lbl错字显示.Text = "回改";
             this.lbl错字显示.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lbl回改显示
@@ -1608,7 +1626,7 @@
             this.lbl回改显示.Name = "lbl回改显示";
             this.lbl回改显示.Size = new System.Drawing.Size(31, 14);
             this.lbl回改显示.TabIndex = 16;
-            this.lbl回改显示.Text = "回改";
+            this.lbl回改显示.Text = "标顶";
             this.lbl回改显示.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblspeedcheck
@@ -1730,11 +1748,12 @@
             this.tsb标注.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsb标注.Name = "tsb标注";
             this.tsb标注.Size = new System.Drawing.Size(36, 19);
-            this.tsb标注.Text = "标记";
+            this.tsb标注.Text = "词提";
             this.tsb标注.ToolTipText = "打开自动标记词组\r\n(技术提供：hwj，感谢hwj)\r\n如果您挂有码表并且开启智能测词，则会从您的码表\r\n文件中提取当前文段所有词汇显示\r\n蓝色：一重 | 红色：" +
     "二重 | 紫色：三重 | 粉色：四重及以上\r\n实线：全码 | 虚线：非全码";
             this.tsb标注.WdithAdjust = 0;
-            this.tsb标注.Click += new System.EventHandler(this.PointIt);
+            // this.tsb标注.Click += new System.EventHandler(this.PointIt);
+            this.tsb标注.Click += new System.EventHandler(词提开关ToolStripMenuItem_Click);
             // 
             // toolStripButton1
             // 
@@ -1900,7 +1919,17 @@
             this.设置ToolStripMenuItem1,
             this.新发文ToolStripMenuItem,
             this.外观ToolStripMenuItem,
-            this.暂停ToolStripMenuItem,
+            this.重置词提ToolStripMenuItem,
+            this.重置记分ToolStripMenuItem,
+            this.发送记分ToolStripMenuItem,
+            this.清空编码键ToolStripMenuItem,
+            this.标顶ToolStripMenuItem,
+            this.长生ToolStripMenuItem,
+            this.极速锦标赛ToolStripMenuItem,
+            this.极速日赛ToolStripMenuItem,
+            this.乱序ToolStripMenuItem,
+            this.乱序ToolStripMenuItem2,
+            // this.暂停ToolStripMenuItem,
             this.toolStripSeparator8,
             this.载文途径ToolStripMenuItem1,
             this.其它功能ToolStripMenuItem,
@@ -1928,7 +1957,7 @@
             this.新发文ToolStripMenuItem.Font = new System.Drawing.Font("微软雅黑", 9.2F, System.Drawing.FontStyle.Bold);
             this.新发文ToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(104)))), ((int)(((byte)(139)))));
             this.新发文ToolStripMenuItem.Name = "新发文ToolStripMenuItem";
-            this.新发文ToolStripMenuItem.ShortcutKeyDisplayString = "F2";
+            this.新发文ToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F2;
             this.新发文ToolStripMenuItem.Size = new System.Drawing.Size(156, 24);
             this.新发文ToolStripMenuItem.Text = "发文...";
             this.新发文ToolStripMenuItem.Click += new System.EventHandler(this.新发文ToolStripMenuItem_Click);
@@ -1942,15 +1971,89 @@
             this.外观ToolStripMenuItem.Text = "外观...";
             this.外观ToolStripMenuItem.Click += new System.EventHandler(this.外观ToolStripMenuItem_Click);
             // 
+            // 重置词提ToolStripMenuItem
+            // 
+            this.重置词提ToolStripMenuItem.Font = new System.Drawing.Font("微软雅黑", 9.2F, System.Drawing.FontStyle.Bold);
+            this.重置词提ToolStripMenuItem.ForeColor = System.Drawing.Color.Blue;
+            this.重置词提ToolStripMenuItem.Name = "重置词提ToolStripMenuItem";
+            this.重置词提ToolStripMenuItem.Size = new System.Drawing.Size(156, 24);
+            this.重置词提ToolStripMenuItem.Text = "重置词提";
+            this.重置词提ToolStripMenuItem.Click += new System.EventHandler(this.重置词提ToolStripMenuItem_Click);
+            // 
+            // 重置记分ToolStripMenuItem
+            // 
+            this.重置记分ToolStripMenuItem.Font = new System.Drawing.Font("微软雅黑", 9.2F, System.Drawing.FontStyle.Bold);
+            this.重置记分ToolStripMenuItem.ForeColor = System.Drawing.Color.Blue;
+            this.重置记分ToolStripMenuItem.Name = "重置记分ToolStripMenuItem";
+            this.重置记分ToolStripMenuItem.Size = new System.Drawing.Size(156, 24);
+            this.重置记分ToolStripMenuItem.Text = "重置记分";
+            this.重置记分ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F9)));
+            this.重置记分ToolStripMenuItem.Click += new System.EventHandler(this.重置记分ToolStripMenuItem_Click);
+            // 
+            // 发送记分ToolStripMenuItem
+            // 
+            this.发送记分ToolStripMenuItem.Font = new System.Drawing.Font("微软雅黑", 9.2F, System.Drawing.FontStyle.Bold);
+            this.发送记分ToolStripMenuItem.ForeColor = System.Drawing.Color.Blue;
+            this.发送记分ToolStripMenuItem.Name = "发送记分ToolStripMenuItem";
+            this.发送记分ToolStripMenuItem.Size = new System.Drawing.Size(156, 24);
+            this.发送记分ToolStripMenuItem.Text = "发送记分";
+            this.发送记分ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F9)));
+            this.发送记分ToolStripMenuItem.Click += new System.EventHandler(this.发送记分ToolStripMenuItem_Click);
+            // 
+            // 清空编码键ToolStripMenuItem
+            // 
+            this.清空编码键ToolStripMenuItem.Font = new System.Drawing.Font("微软雅黑", 9.2F, System.Drawing.FontStyle.Bold);
+            this.清空编码键ToolStripMenuItem.ForeColor = System.Drawing.Color.Blue;
+            this.清空编码键ToolStripMenuItem.Name = "清空编码键ToolStripMenuItem";
+            this.清空编码键ToolStripMenuItem.Size = new System.Drawing.Size(156, 24);
+            this.清空编码键ToolStripMenuItem.Text = "清空编码键->ENTER";
+            this.清空编码键ToolStripMenuItem.Click += new System.EventHandler(this.清空编码键ToolStripMenuItem_Click);
+            // 
+            // 标顶ToolStripMenuItem
+            // 
+            this.标顶ToolStripMenuItem.Font = new System.Drawing.Font("微软雅黑", 9.2F, System.Drawing.FontStyle.Bold);
+            this.标顶ToolStripMenuItem.ForeColor = System.Drawing.Color.Blue;
+            this.标顶ToolStripMenuItem.Name = "标顶ToolStripMenuItem";
+            this.标顶ToolStripMenuItem.Size = new System.Drawing.Size(156, 24);
+            this.标顶ToolStripMenuItem.Text = "标顶->开";
+            this.标顶ToolStripMenuItem.Click += new System.EventHandler(this.标顶ToolStripMenuItem_Click);
+            // 
+            // 长生ToolStripMenuItem
+            // 
+            this.长生ToolStripMenuItem.Font = new System.Drawing.Font("微软雅黑", 9.2F, System.Drawing.FontStyle.Bold);
+            this.长生ToolStripMenuItem.ForeColor = System.Drawing.Color.Blue;
+            this.长生ToolStripMenuItem.Name = "长生ToolStripMenuItem";
+            this.长生ToolStripMenuItem.Size = new System.Drawing.Size(156, 24);
+            this.长生ToolStripMenuItem.Text = "长生";
+            this.长生ToolStripMenuItem.Click += new System.EventHandler(this.长生ToolStripMenuItem_Click);
+            // 
+            // 极速锦标赛ToolStripMenuItem
+            // 
+            this.极速锦标赛ToolStripMenuItem.Font = new System.Drawing.Font("微软雅黑", 9.2F, System.Drawing.FontStyle.Bold);
+            this.极速锦标赛ToolStripMenuItem.ForeColor = System.Drawing.Color.Blue;
+            this.极速锦标赛ToolStripMenuItem.Name = "极速锦标赛ToolStripMenuItem";
+            this.极速锦标赛ToolStripMenuItem.Size = new System.Drawing.Size(156, 24);
+            this.极速锦标赛ToolStripMenuItem.Text = "极速锦标赛";
+            this.极速锦标赛ToolStripMenuItem.Click += new System.EventHandler(this.极速锦标赛ToolStripMenuItem_Click);
+            // 
+            // 极速日赛ToolStripMenuItem
+            // 
+            this.极速日赛ToolStripMenuItem.Font = new System.Drawing.Font("微软雅黑", 9.2F, System.Drawing.FontStyle.Bold);
+            this.极速日赛ToolStripMenuItem.ForeColor = System.Drawing.Color.Blue;
+            this.极速日赛ToolStripMenuItem.Name = "极速日赛ToolStripMenuItem";
+            this.极速日赛ToolStripMenuItem.Size = new System.Drawing.Size(156, 24);
+            this.极速日赛ToolStripMenuItem.Text = "极速日赛";
+            this.极速日赛ToolStripMenuItem.Click += new System.EventHandler(this.极速日赛ToolStripMenuItem_Click);
+            // 
             // 暂停ToolStripMenuItem
             // 
-            this.暂停ToolStripMenuItem.Font = new System.Drawing.Font("微软雅黑", 9.2F, System.Drawing.FontStyle.Bold);
-            this.暂停ToolStripMenuItem.Name = "暂停ToolStripMenuItem";
-            this.暂停ToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F8;
-            this.暂停ToolStripMenuItem.Size = new System.Drawing.Size(156, 24);
-            this.暂停ToolStripMenuItem.Text = "暂停";
-            this.暂停ToolStripMenuItem.ToolTipText = "暂停跟打，失去焦点的时候，也会自动暂停。";
-            this.暂停ToolStripMenuItem.Click += new System.EventHandler(this.暂停ToolStripMenuItem_Click);
+            // this.暂停ToolStripMenuItem.Font = new System.Drawing.Font("微软雅黑", 9.2F, System.Drawing.FontStyle.Bold);
+            // this.暂停ToolStripMenuItem.Name = "暂停ToolStripMenuItem";
+            // this.暂停ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F11)));
+            // this.暂停ToolStripMenuItem.Size = new System.Drawing.Size(156, 24);
+            // this.暂停ToolStripMenuItem.Text = "暂停";
+            // this.暂停ToolStripMenuItem.ToolTipText = "暂停跟打，失去焦点的时候，也会自动暂停。";
+            // this.暂停ToolStripMenuItem.Click += new System.EventHandler(this.暂停ToolStripMenuItem_Click);
             // 
             // toolStripSeparator8
             // 
@@ -1961,7 +2064,9 @@
             // 
             this.载文途径ToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.从剪切板ToolStripMenuItem1,
-            this.从QQ窗口手动ToolStripMenuItem1});
+            this.从QQ窗口手动ToolStripMenuItem1,
+            this.从QQ窗口手动ToolStripMenuItem2
+            });
             this.载文途径ToolStripMenuItem1.Name = "载文途径ToolStripMenuItem1";
             this.载文途径ToolStripMenuItem1.Size = new System.Drawing.Size(156, 24);
             this.载文途径ToolStripMenuItem1.Text = "载文途径";
@@ -1969,7 +2074,7 @@
             // 从剪切板ToolStripMenuItem1
             // 
             this.从剪切板ToolStripMenuItem1.Name = "从剪切板ToolStripMenuItem1";
-            this.从剪切板ToolStripMenuItem1.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.E)));
+            this.从剪切板ToolStripMenuItem1.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt| System.Windows.Forms.Keys.E)));
             this.从剪切板ToolStripMenuItem1.Size = new System.Drawing.Size(214, 24);
             this.从剪切板ToolStripMenuItem1.Text = "从剪切板";
             this.从剪切板ToolStripMenuItem1.Click += new System.EventHandler(this.从剪切板ToolStripMenuItem1_Click);
@@ -1982,9 +2087,18 @@
             this.从QQ窗口手动ToolStripMenuItem1.Text = "从QQ窗口手动";
             this.从QQ窗口手动ToolStripMenuItem1.Click += new System.EventHandler(this.从QQ窗口手动ToolStripMenuItem1_Click);
             // 
+            // 从QQ窗口手动ToolStripMenuItem2
+            // 
+            this.从QQ窗口手动ToolStripMenuItem2.Name = "从QQ窗口手动ToolStripMenuItem2";
+            this.从QQ窗口手动ToolStripMenuItem2.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.E)));
+            this.从QQ窗口手动ToolStripMenuItem2.Size = new System.Drawing.Size(214, 24);
+            this.从QQ窗口手动ToolStripMenuItem2.Text = "从QQ窗口手动";
+            this.从QQ窗口手动ToolStripMenuItem2.Click += new System.EventHandler(this.从QQ窗口手动ToolStripMenuItem1_Click);
+            // 
             // 其它功能ToolStripMenuItem
             // 
             this.其它功能ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.乱序ToolStripMenuItem2,
             this.查询当前编码ToolStripMenuItem2,
             this.老板键ToolStripMenuItem1,
             this.检验真伪ToolStripMenuItem,
@@ -2013,7 +2127,7 @@
             // 检验真伪ToolStripMenuItem
             // 
             this.检验真伪ToolStripMenuItem.Name = "检验真伪ToolStripMenuItem";
-            this.检验真伪ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.D)));
+            this.检验真伪ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F12)));
             this.检验真伪ToolStripMenuItem.Size = new System.Drawing.Size(213, 24);
             this.检验真伪ToolStripMenuItem.Text = "检验真伪";
             this.检验真伪ToolStripMenuItem.Click += new System.EventHandler(this.检验真伪ToolStripMenuItem_Click);
@@ -2087,6 +2201,14 @@
             this.发送正在跟打的文段ToolStripMenuItem1.Size = new System.Drawing.Size(208, 24);
             this.发送正在跟打的文段ToolStripMenuItem1.Text = "当前文段";
             this.发送正在跟打的文段ToolStripMenuItem1.Click += new System.EventHandler(this.发送正在跟打的文段ToolStripMenuItem1_Click);
+            // 
+            // 上一次成绩ToolStripMenuItem1
+            // 
+            this.上一次成绩ToolStripMenuItem1.Name = "上一次成绩ToolStripMenuItem1";
+            this.上一次成绩ToolStripMenuItem1.ShortcutKeys = System.Windows.Forms.Keys.F9;
+            this.上一次成绩ToolStripMenuItem1.Size = new System.Drawing.Size(208, 24);
+            this.上一次成绩ToolStripMenuItem1.Text = "上次成绩";
+            this.上一次成绩ToolStripMenuItem1.Click += new System.EventHandler(this.上一次成绩ToolStripMenuItem1_Click);
             // 
             // 上一次成绩ToolStripMenuItem1
             // 
@@ -2205,7 +2327,7 @@
             // 发下一段ToolStripMenuItem
             // 
             this.发下一段ToolStripMenuItem.Name = "发下一段ToolStripMenuItem";
-            this.发下一段ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
+            this.发下一段ToolStripMenuItem.ShortcutKeys =  System.Windows.Forms.Keys.F6;
             this.发下一段ToolStripMenuItem.Size = new System.Drawing.Size(186, 24);
             this.发下一段ToolStripMenuItem.Text = "发下一段";
             this.发下一段ToolStripMenuItem.Click += new System.EventHandler(this.发下一段ToolStripMenuItem_Click);
@@ -2266,10 +2388,32 @@
             // 换群ToolStripMenuItem1
             // 
             this.换群ToolStripMenuItem1.Name = "换群ToolStripMenuItem1";
-            this.换群ToolStripMenuItem1.ShortcutKeyDisplayString = "F5";
+            this.换群ToolStripMenuItem1.ShortcutKeys = System.Windows.Forms.Keys.F5;
             this.换群ToolStripMenuItem1.Size = new System.Drawing.Size(128, 24);
             this.换群ToolStripMenuItem1.Text = "换群";
             this.换群ToolStripMenuItem1.Click += new System.EventHandler(this.换群ToolStripMenuItem1_Click);
+            // 
+            // disorder
+            // 
+            this.乱序ToolStripMenuItem.Name = "乱序disorder";
+            this.乱序ToolStripMenuItem.ShortcutKeys = (System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Q);
+            this.乱序ToolStripMenuItem.Size = new System.Drawing.Size(128, 24);
+            this.乱序ToolStripMenuItem.Text = "乱序";
+            this.乱序ToolStripMenuItem.Click += new System.EventHandler(this.乱序disorder);
+            
+            this.乱序ToolStripMenuItem2.Name = "乱序disorder2";
+            this.乱序ToolStripMenuItem2.ShortcutKeys = (System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.L);
+            this.乱序ToolStripMenuItem2.Size = new System.Drawing.Size(128, 24);
+            this.乱序ToolStripMenuItem2.Text = "乱序";
+            this.乱序ToolStripMenuItem2.Click += new System.EventHandler(this.乱序disorder);
+            // 
+            // citi
+            // 
+            this.检验真伪ToolStripMenuItem.Name = "词提开关ToolStripMenuItem";
+            this.检验真伪ToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F8;
+            this.检验真伪ToolStripMenuItem.Size = new System.Drawing.Size(213, 24);
+            this.检验真伪ToolStripMenuItem.Text = "词提开关";
+            this.检验真伪ToolStripMenuItem.Click += new System.EventHandler(this.词提开关ToolStripMenuItem_Click);
             // 
             // toolStripSeparator6
             // 
@@ -2566,6 +2710,7 @@
         private System.Windows.Forms.ToolStripMenuItem 载文途径ToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem 从剪切板ToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem 从QQ窗口手动ToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem 从QQ窗口手动ToolStripMenuItem2;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
         private System.Windows.Forms.ToolStripMenuItem 保持窗口最前ToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem 其它功能ToolStripMenuItem;
@@ -2597,7 +2742,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem 新发文ToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-        private System.Windows.Forms.ToolStripMenuItem 暂停ToolStripMenuItem;
         private System.Windows.Forms.Timer timerLblTime;
         public System.Windows.Forms.ToolStripMenuItem 发文状态ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 添加测速点ToolStripMenuItem;
@@ -2647,6 +2791,17 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
         private System.Windows.Forms.ToolStripMenuItem 显示ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 外观ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 重置词提ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 重置记分ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 发送记分ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 清空编码键ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 标顶ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 长生ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 极速锦标赛ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 极速日赛ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 乱序ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 乱序ToolStripMenuItem2;
+        // private System.Windows.Forms.ToolStripMenuItem 暂停ToolStripMenuItem;
         private ToolButton tbnSpline;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column19;
         private System.Windows.Forms.DataGridViewTextBoxColumn 时间;

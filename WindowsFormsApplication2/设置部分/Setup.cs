@@ -259,8 +259,9 @@ namespace WindowsFormsApplication2
             Glob.InstraSrf_ = IniRead("输入法", "标志", "0");
             Glob.binput = true;//输入法修改
             Glob.DelaySend = int.Parse(IniRead("发送", "延时", "50"));
-            
-            Glob.sortSend = this.textBox3.Text;
+
+            // Glob.sortSend = this.textBox3.Text;
+            Glob.InitSortSend(this.textBox3.Text);
             Glob.Right = pictureBoxRight.BackColor;
             Glob.False = pictureBoxFalse.BackColor;
             frm.richTextBox1.BackColor = this.buttoncolor1.BackColor;
@@ -331,19 +332,23 @@ namespace WindowsFormsApplication2
             }
         } //输入法
         //排序顺序
-        public void sortsend() {
-            string sort = IniRead("发送", "顺序", "ABCVDTSEFULGNOPRQ");
+        public void sortsend()
+        {
+            string sort = IniRead("发送", "顺序", "ABCVGDSTLUEFNOPRQ");
+            // Glob.InitSortSend(IniRead("发送", "顺序", "ABCVGDSTLUEFNOPRQ"));
+            // string sort = Glob.sortSend;
             textBox3.Text = sort;
             try
             {
                 char[] g = sort.ToArray();
-                checkallout();//清空所有选择
+                checkallout(); //清空所有选择
                 for (int i = 0; i < g.Length; i++)
                 {
                     testit(g[i]); //根据当前输入 选中 或者取消选中
                 }
             }
-            catch (Exception err) {
+            catch (Exception err)
+            {
                 MessageBox.Show(err.Message);
             }
         }

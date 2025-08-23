@@ -77,6 +77,7 @@ namespace WindowsFormsApplication2.编码提示
         /// <returns></returns>
         private List<List<string>> GetDic()
         {
+            return null;
             ReadState = State.Doing;
             var s = ReadFile();
             if (s == null) { ReadState = State.CanNotRead; return null; }

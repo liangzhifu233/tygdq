@@ -74,7 +74,7 @@ namespace WindowsFormsApplication2
                 string i = "";
                 if (NewSendText.类型 == "单字")
                 {
-                    if (NewSendText.是否乱序) i = "单字/乱序";
+                    if (NewSendText.是否乱序) i = "单字/顺序";
                     else i = "单字/顺序";
                 }
                 else {
