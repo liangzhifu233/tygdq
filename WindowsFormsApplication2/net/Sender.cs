@@ -81,7 +81,9 @@ namespace Net
             url = Sender.FixUrl(url);
 
             // 将字典序列化为JSON字符串
-            string jsonContent = JsonSerializer.Serialize(content);
+            // string jsonContent = JsonSerializer.Serialize(content);
+            // 使用 Newtonsoft.Json 而不是 System.Text.Json
+            string jsonContent = Newtonsoft.Json.JsonConvert.SerializeObject(content);
 
             // 使用JSON字符串创建StringContent
             HttpContent httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
